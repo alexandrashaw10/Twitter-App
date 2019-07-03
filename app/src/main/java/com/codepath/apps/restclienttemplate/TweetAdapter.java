@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import java.util.ArrayList;
@@ -47,9 +48,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         String formattedTime = TimeFormatter.getTimeDifference(tweet.createdAt);
         holder.tvRelativeTime.setText(formattedTime);
 
-        // TODO add placeholder image
+        // import image as a circle
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
+                .apply(RequestOptions.circleCropTransform())
                 .into(holder.ivProfileImage);
     }
 

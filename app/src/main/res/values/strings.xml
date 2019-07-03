@@ -6,6 +6,6 @@
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
     <string name="tweetInputHint">What\'s happening?</string>
-    <string name="btnSend">SEND</string>
+    <string name="btnSend">Tweet</string>
 
 </resources>

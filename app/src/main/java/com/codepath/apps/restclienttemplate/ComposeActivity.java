@@ -20,11 +20,9 @@ import cz.msebera.android.httpclient.Header;
 public class ComposeActivity extends AppCompatActivity {
 
     public static final String RESULT_TWEET_KEY = "result_tweet";
-    public static final int MAX_CHAR = 280;
     EditText etTweetInput;
     Button btnSend;
     TwitterClient client;
-    private int charsLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
