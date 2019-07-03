@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ public class TimelineActivity extends AppCompatActivity {
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +42,13 @@ public class TimelineActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
+        // change the title of the ActionBar
+        getSupportActionBar().setTitle("Home");
+
         // find the RecyclerView and SwipeContainer and set up the adapter using the data source
         rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         tweets = new ArrayList<>();
         tweetAdapter = new TweetAdapter(tweets);
