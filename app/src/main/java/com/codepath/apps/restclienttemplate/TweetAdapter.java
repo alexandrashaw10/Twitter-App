@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
@@ -80,8 +81,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    // Add a list of items -- change to type used
-    public void addAll(List<Tweet> list) {
+    // Add a list of items
+    public void addAll(ArrayList<Tweet> list) {
         mTweets.addAll(list);
         notifyDataSetChanged();
     }
