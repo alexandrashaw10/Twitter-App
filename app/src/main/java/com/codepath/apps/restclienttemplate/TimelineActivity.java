@@ -1,10 +1,14 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -12,6 +16,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -19,6 +24,7 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE = 100;
     private TwitterClient client;
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
@@ -84,39 +90,44 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
-    /*
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-        // TODO inflate somthn for the create button in the toolbar to create a new tweet
+        super.onCreateOptionsMenu(menu);
+        // inflate the menu
         getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        return true;
     }
 
     @Override
-    public onOptionsItemsSelected(MenuItem item) {
-        // TODO copy from website
-        // click handler that
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        composeMessage();
+        return true;
     }
 
-    // TODO create composeMessage() method that starts intent
     // creates an intent composeTweet
-    // start activity for result, pass in compose tweet, request code (make it a resource)
-        // right click on number - refactor -> extract -> constant (command option C)
-    // use visual names for intents
-
+    public void composeMessage() {
+        Intent composeTweet = new Intent(this, ComposeActivity.class);
+        startActivityForResult(composeTweet, REQUEST_CODE);
+    }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == COMPOSE_TWEET_REQUEST_CODE && resultCode == RESULT_OK) {
-            // TODO must unwrap Parcelable, dummy code
-            Tweet resultTweet = data.getParcelableExtra(ComposeActivity.RESULT_TWEET_KEY);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // get the data back from the intent and add it to the list of tweets
+            Tweet resultTweet = Parcels.unwrap(data.getParcelableExtra(ComposeActivity.RESULT_TWEET_KEY));
 
+            // add it, notify the adapter, and scroll to position of added tweet
             tweets.add(0, resultTweet);
             tweetAdapter.notifyItemInserted(0);
-            // maybe scroll to area
+            rvTweets.scrollToPosition(0);
 
+            Toast.makeText(this, "Tweet Created Successfully", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("sending_tweet", "sending tweet not run");
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
-    */
+
 }

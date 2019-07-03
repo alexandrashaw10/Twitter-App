@@ -2,7 +2,9 @@ package com.codepath.apps.restclienttemplate.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
+@Parcel
 public class Tweet {
 
     // list out the attributes
@@ -21,5 +23,10 @@ public class Tweet {
         tweet.createdAt = jsonObject.getString("created_at");
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         return tweet;
+    }
+
+    @Override
+    public String toString() {
+        return "Tweet{" + "body='" + body + "}";
     }
 }

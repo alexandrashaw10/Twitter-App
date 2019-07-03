@@ -60,5 +60,12 @@ public class TwitterClient extends OAuthBaseClient {
 	 *    i.e client.post(apiUrl, params, handler);
 	 */
 
-	// TODO implement somthn here to click send button when creating tweet
+	// sends the tweet onto Twitter using the API
+	public void sendTweet(String message, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/update.json");
+
+		RequestParams params = new RequestParams();
+		params.put("status", message);
+		client.post(apiUrl, params, handler);
+	}
 }
