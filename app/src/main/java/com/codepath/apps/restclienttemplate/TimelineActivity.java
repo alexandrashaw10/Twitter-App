@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class TimelineActivity extends AppCompatActivity {
 
+    private SwipeRefreshLayout swipeContainer;
+
     public static final int REQUEST_CODE = 100;
     private TwitterClient client;
     TweetAdapter tweetAdapter;
@@ -37,8 +40,10 @@ public class TimelineActivity extends AppCompatActivity {
 
         client = TwitterApp.getRestClient(this);
 
-        // find the RecyclerView and set up the adapter using the data source
+        // find the RecyclerView and SwipeContainer and set up the adapter using the data source
         rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+
         tweets = new ArrayList<>();
         tweetAdapter = new TweetAdapter(tweets);
         rvTweets.setLayoutManager(new LinearLayoutManager(this));
