@@ -27,12 +27,14 @@ import cz.msebera.android.httpclient.Header;
 public class TimelineActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     public static final int REQUEST_CODE = 100;
     private TwitterClient client;
     TweetAdapter tweetAdapter;
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
+    long maxId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,23 +47,33 @@ public class TimelineActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Twitter");
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.twitter_blue)));
 
-
         // find the RecyclerView and SwipeContainer and set up the adapter using the data source
         rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
 
         tweets = new ArrayList<>();
         tweetAdapter = new TweetAdapter(tweets);
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvTweets.setLayoutManager(linearLayoutManager);
         rvTweets.setAdapter(tweetAdapter);
+
+        // create a scroll listener
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // when reach the bottom of the screen, add more tweets
+                loadNextDataFromApi(page);
+            }
+        };
+
+        // Adds the scroll listener to RecyclerView
+        rvTweets.addOnScrollListener(scrollListener);
 
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // refresh the page
                 tweetAdapter.clear();
-                populateTimeline();
-                // Now we call setRefreshing(false) to signal refresh has finished
+                populateTimeline(maxId);
                 swipeContainer.setRefreshing(false);
             }
         });
@@ -73,9 +85,9 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_red_light);
     }
 
-    private void populateTimeline() {
+    private void populateTimeline(long maxId) {
         showProgressBar();
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
+        client.getHomeTimeline(maxId, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("TwitterClient", response.toString());
@@ -169,7 +181,7 @@ public class TimelineActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Store instance of the menu item containing progress
         miActionProgressItem = menu.findItem(R.id.miActionProgress);
-        populateTimeline();
+        populateTimeline(maxId);
         // Return to finish
         return super.onPrepareOptionsMenu(menu);
     }
@@ -182,5 +194,12 @@ public class TimelineActivity extends AppCompatActivity {
     public void hideProgressBar() {
         // Hide progress item
         miActionProgressItem.setVisible(false);
+    }
+
+    // Append the next page of data into the adapter
+    // This method populates timeline with more tweets
+    public void loadNextDataFromApi(int offset) {
+        maxId = tweets.get(tweets.size() - 1).uid;
+        populateTimeline(maxId);
     }
 }
