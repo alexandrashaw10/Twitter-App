@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,8 @@ public class ComposeActivity extends AppCompatActivity {
 
         etTweetInput = findViewById(R.id.etTweetInput);
         btnSend = findViewById(R.id.btnSend);
+
+        getSupportActionBar().setTitle("Twitter");
 
         client = new TwitterClient(this);
 
@@ -71,5 +75,33 @@ public class ComposeActivity extends AppCompatActivity {
                 Log.i("sending_tweet", "parsing text failed");
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_compose, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    MenuItem miActionProgressItem;
+
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // Store instance of the menu item containing progress
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+
+        // Return to finish
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 }
