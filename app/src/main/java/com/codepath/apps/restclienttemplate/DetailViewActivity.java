@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
 import org.parceler.Parcels;
@@ -27,9 +28,14 @@ public class DetailViewActivity extends AppCompatActivity {
 
         username = findViewById(R.id.username);
         body = findViewById(R.id.body);
+        profileImage = findViewById(R.id.profileImage);
+
+        username.setText(tweet.user.name);
+        body.setText(tweet.body);
 
         Glide.with(this)
                 .load(tweet.user.profileImageUrl)
+                .apply(RequestOptions.circleCropTransform())
                 .into(profileImage);
     }
 }

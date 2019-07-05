@@ -47,10 +47,10 @@ public class ComposeActivity extends AppCompatActivity {
     }
 
     private void sendTweet() {
+        showProgressBar();
         client.sendTweet(etTweetInput.getText().toString(), new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                // TODO check char count before sending
                 if (statusCode == 200) {
                     try {
                         // parsing response
@@ -68,11 +68,13 @@ public class ComposeActivity extends AppCompatActivity {
                         Log.e("ComposeActivity", "Error parsing response", e);
                     }
                 }
+                hideProgressBar();
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Log.i("sending_tweet", "parsing text failed");
+                hideProgressBar();
             }
         });
     }
@@ -84,7 +86,6 @@ public class ComposeActivity extends AppCompatActivity {
     }
 
     MenuItem miActionProgressItem;
-
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {

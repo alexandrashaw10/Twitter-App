@@ -78,19 +78,24 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvRelativeTime = (TextView) itemView.findViewById(R.id.tvRelativeTime);
+
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             // switch to details activity when you click on a tweet
             int position = getAdapterPosition();
+
+            Log.i("onClickedTweet", String.format("position %s ", position));
             if (position != RecyclerView.NO_POSITION) {
                 Tweet clickedTweet = mTweets.get(position);
 
-                Intent getDetailsIntent = new Intent(context, DetailViewActivity.class);
-                getDetailsIntent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(clickedTweet));
+                Intent intent = new Intent(context, DetailViewActivity.class);
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(clickedTweet));
                 Log.i("onClickedTweet", "created_intent");
-                context.startActivity(getDetailsIntent);
+
+                context.startActivity(intent);
             }
         }
     }
