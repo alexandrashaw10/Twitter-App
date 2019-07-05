@@ -9,6 +9,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity">
 
+
     <Button
         android:id="@+id/button"
         android:layout_width="260dp"
@@ -24,6 +25,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="182dp"
@@ -39,6 +41,6 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/twitter_blue" />
+        app:srcCompat="@drawable/ic_launcher" />
 
 </android.support.constraint.ConstraintLayout>

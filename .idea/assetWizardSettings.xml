@@ -119,7 +119,6 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="imageAsset" value="$USER_HOME$/Downloads/twitter-redesign-icons/mipmap-xxxhdpi-v4/ic_launcher_twitter.png" />
-                                      <entry key="outputName" value="ic_launcher_twitter" />
                                     </map>
                                   </option>
                                 </PersistentState>

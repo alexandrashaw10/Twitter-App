@@ -30,6 +30,9 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 				sampleModelDao.insertModel(sampleModel);
 			}
 		});
+
+		View v = findViewById(R.id.button);
+		v.getRootView().setBackgroundColor(getResources().getColor(R.color.twitter_blue));
 	}
 
 
@@ -46,7 +49,6 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	public void onLoginSuccess() {
 		Intent i = new Intent(this, TimelineActivity.class);
 		startActivity(i);
-		//Toast.makeText(this, "success", Toast.LENGTH_LONG).show();
 	}
 
 	// OAuth authentication flow failed, handle the error
@@ -62,5 +64,4 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	public void loginToRest(View view) {
 		getClient().connect();
 	}
-
 }
