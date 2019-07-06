@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -35,6 +36,7 @@ public class ComposeActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.btnSend);
 
         getSupportActionBar().setTitle("Twitter");
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.twitter_blue)));
 
         client = new TwitterClient(this);
 
@@ -91,7 +93,6 @@ public class ComposeActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(Menu menu) {
         // Store instance of the menu item containing progress
         miActionProgressItem = menu.findItem(R.id.miActionProgress);
-
         // Return to finish
         return super.onPrepareOptionsMenu(menu);
     }

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -45,12 +46,33 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // populate the view with the needed information
-        Tweet tweet = mTweets.get(position);
+        final Tweet tweet = mTweets.get(position);
         holder.tvUsername.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
 
         String formattedTime = TimeFormatter.getTimeDifference(tweet.createdAt);
         holder.tvRelativeTime.setText(formattedTime);
+
+        holder.likeCount.setText(Integer.toString(tweet.favoriteCount));
+        holder.retweetCount.setText(Integer.toString(tweet.retweetCount));
+
+        holder.ic_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tweet.isFavorited) {
+                //    client.unfavoriteTweet(tweet.uid);
+                } else {
+                 //   client.favoriteTweet(tweet.uid);
+                }
+            }
+        });
+
+        holder.ic_retweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         // import image as a circle
         Glide.with(context)
@@ -70,6 +92,12 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView tvUsername;
         public TextView tvBody;
         public TextView tvRelativeTime;
+        public ImageButton ic_like;
+        public ImageButton ic_retweet;
+        public ImageButton ic_reply;
+
+        public TextView likeCount;
+        public TextView retweetCount;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -78,6 +106,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvRelativeTime = (TextView) itemView.findViewById(R.id.tvRelativeTime);
+
+            ic_like = itemView.findViewById(R.id.ic_like);
+            ic_retweet = itemView.findViewById(R.id.ic_retweet);
+            ic_reply = itemView.findViewById(R.id.ic_reply);
+
+            likeCount = itemView.findViewById(R.id.tvLikeCount);
+            retweetCount = itemView.findViewById(R.id.tvRetweetCount);
 
             itemView.setOnClickListener(this);
         }
