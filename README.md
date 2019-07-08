@@ -51,7 +51,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-[Twitter](https://github.com/alexandrashaw10/Twitter-App/blob/master/twitterRecording.gif)
+[Twitter](https://github.com/alexandrashaw10/Twitter-App/blob/master/twitterApp.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
